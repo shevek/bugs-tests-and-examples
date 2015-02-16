@@ -13,4 +13,9 @@ apply from: file('gradle/license.gradle')
 group = "org.anarres.tests"
 
 dependencies {
+	def janinoVersion = "2.7.6"
+	compile "org.codehaus.janino:janino:$janinoVersion"
+	compile "org.codehaus.janino:commons-compiler-jdk:$janinoVersion"
+
+	compile "com.esotericsoftware:kryo:3.0.0"
 }
