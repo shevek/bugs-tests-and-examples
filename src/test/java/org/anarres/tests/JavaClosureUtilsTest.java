@@ -19,7 +19,7 @@ public class JavaClosureUtilsTest {
         LOG.info("Evaluator is " + evaluator);
     }
 
-    @Test
+    // @Test
     public void testJanino() throws Exception {
         testJavaCodeGenerator("Object evaluate() { return 5; }", false);
     }
