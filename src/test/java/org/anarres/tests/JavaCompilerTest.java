@@ -48,8 +48,7 @@ public class JavaCompilerTest {
         return this.result;
     }
 
-    public void
-            cook(String optionalFileName, final Reader r) throws CompileException, IOException {
+    public void cook(String optionalFileName, final Reader r) throws CompileException, IOException {
         this.assertNotCooked();
 
         // Create one Java source file in memory, which will be compiled later.
@@ -64,26 +63,22 @@ public class JavaCompilerTest {
             compilationUnit = new SimpleJavaFileObject(uri, Kind.SOURCE) {
 
                 @Override
-                public boolean
-                        isNameCompatible(String simpleName, Kind kind) {
+                public boolean isNameCompatible(String simpleName, Kind kind) {
                     return true;
                 }
 
                 @Override
-                public Reader
-                        openReader(boolean ignoreEncodingErrors) throws IOException {
+                public Reader openReader(boolean ignoreEncodingErrors) throws IOException {
                     return r;
                 }
 
                 @Override
-                public CharSequence
-                        getCharContent(boolean ignoreEncodingErrors) throws IOException {
+                public CharSequence getCharContent(boolean ignoreEncodingErrors) throws IOException {
                     return Cookable.readString(this.openReader(ignoreEncodingErrors));
                 }
 
                 @Override
-                public String
-                        toString() {
+                public String toString() {
                     return String.valueOf(this.uri);
                 }
             };
@@ -104,7 +99,10 @@ public class JavaCompilerTest {
 
         // Wrap it so that the output files (in our case class files) are stored in memory rather
         // than in files.
-        final JavaFileManager fileManager = new ForwardingJavaFileManager<JavaFileManager>(
+        final JavaFileManager fileManager =
+                // Uncomment next line to use direct ByteArrayJavaFileManager
+                // new ByteArrayJavaFileManager<JavaFileManager>(fm);
+                new ForwardingJavaFileManager<JavaFileManager>(
                 new ByteArrayJavaFileManager<JavaFileManager>(fm)
         ) {
 
