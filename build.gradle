@@ -1,16 +1,48 @@
-ext.githubProjectName = rootProject.name
-
 buildscript {
-	apply from: file('gradle/buildscript.gradle'), to: buildscript
+	repositories {
+		// mavenLocal()
+		mavenCentral()
+		jcenter()
+		// maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+	}
+
+	dependencies {
+		classpath 'org.anarres.gradle:gradle-stdproject-plugin:1.0.8'
+	}
 }
 
-apply from: file('gradle/convention.gradle')
-// apply from: file('gradle/github.gradle')
-// apply from: file('gradle/nexus.gradle')
-apply from: file('gradle/check.gradle')
-apply from: file('gradle/license.gradle')
+apply plugin: 'org.anarres.stdproject'
+stdproject {
+	javadocLinkSource = true;
+}
 
-group = "org.anarres.tests"
+
+	group = "org.anarres.tests"
+
+	apply plugin: 'org.anarres.stdmodule'
+	stdmodule {
+		description "A bug, test or example."
+		author id: 'shevek', name: 'Shevek', email: 'github@anarres.org'
+		license 'Apache-2.0'
+	}
+
+	sourceCompatibility = 1.5
+	animalsniffer {
+		signature = "org.codehaus.mojo.signature:java15:+@signature"
+	}
 
 dependencies {
+	compile 'com.google.code.findbugs:annotations:3.0.1'
+	compile 'org.slf4j:slf4j-api:1.7.12'
+
+	compile 'net.sf.jopt-simple:jopt-simple:4.7'
+	compile 'org.apache.ant:ant:1.7.0'
+	compile 'com.github.zafarkhaja:java-semver:0.8.0'
+	compile 'org.anarres.jdiagnostics:jdiagnostics:1.0.4'
+
+	testCompile 'com.google.guava:guava:18.0'
 }
+
+apply plugin: 'application'
+
+mainClassName = "org.anarres.tests.Main"
