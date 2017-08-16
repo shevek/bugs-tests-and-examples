@@ -5,6 +5,11 @@
  */
 package org.anarres.tests;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import com.google.common.io.Resources;
+import java.io.InputStream;
+import java.net.URL;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -31,7 +36,13 @@ public class Main {
             return;
         }
 
-        // ...
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.registerModule(new JaxbAnnotationModule());
+
+        URL url = Resources.getResource("data.xml");
+        try (InputStream in = Resources.asByteSource(url).openBufferedStream()) {
+            xmlMapper.readValue(in, Workbook.class);
+        }
     }
 
     public static void main(String... args) throws Exception {
