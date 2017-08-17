@@ -21,6 +21,17 @@ public class Datasource {
         @XmlAttribute
         public String role; // measure
 
+        public static class Calculation {
+
+            @XmlAttribute(name = "class")
+            public String _class;   // tableau
+            @XmlAttribute
+            public String formula;
+        }
+
+        @XmlElement(name = "calculation")
+        public Calculation calculation;
+
         public static class Member {
 
             @XmlAttribute
